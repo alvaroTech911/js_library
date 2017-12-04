@@ -1,0 +1,20 @@
+{
+  "name": "library",
+  "version": "1.0.0",
+  "description": "A simple library built with native JS",
+  "main": "app.js",
+  "scripts": {
+    "start": "webpack-dev-server --entry ./src/index.js --output-filename ./dist/bundle.js",
+    "build": "webpack"
+  },
+  "author": "Alvaro Gomez",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.5"
+  }
+}
