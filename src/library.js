@@ -46,7 +46,7 @@ Library.prototype.addBook = (title, author, numberOfPages, publishDate) => {
     console.log('Sorry, that book already exists');
   } else{
     myLibrary.books.push(newBook);
-    console.log(myLibary.books);
+    console.log(myLibrary.books);
   }
 }
 
