@@ -120,4 +120,4 @@ Library.prototype.getRandomAuthorName = () => {
   console.log(myLibrary.books[randomIndex].author);
 };
 
-export default myLibrary
+export default myLibrary;
