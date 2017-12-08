@@ -21,7 +21,7 @@ const myLibrary = new Library();
 const date1 = new Date(1425, 1, 1);
 const date2 = new Date(2018, 1, 1);
 function rDate(start, end){
-  return new Date(+ start + Math.random() * (end - start))
+  return new Date(+ start + Math.random() * (end - start));
 }
 
 const arrBooks = [
@@ -39,7 +39,6 @@ Library.prototype.getAllBooks = () => {
 Library.prototype.addBook = (newBook) => {
   const bookExists = myLibrary.books.find(book => newBook.title === book.title);
   if(bookExists){
-    // debugger;
     console.log('Sorry, that book already exists');
     return false;
   }else if(newBook.title === undefined || newBook.author === undefined){
@@ -53,14 +52,14 @@ Library.prototype.addBook = (newBook) => {
 };
 
 Library.prototype.addBooks = (arr) => {
-  for(let i = 0; i < arr.length; i++){
-    myLibrary.addBook(arr[i]);
-  }
+  arr.map(book => {
+    return myLibrary.addBook(book)
+  })
   counter = counter + myLibrary.books.length;
   console.log(`Books successfully added ${myLibrary.books.length}`);
 };
 
-console.log(myLibrary.addBooks(arrBooks))
+myLibrary.addBooks(arrBooks);
 
 Library.prototype.removeBookByTitle = title => {
   title = title.trim();
