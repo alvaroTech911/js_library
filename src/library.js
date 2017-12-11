@@ -21,7 +21,7 @@ let myLibrary = new Library();
 const date1 = new Date(1425, 1, 1);
 const date2 = new Date(2018, 1, 1);
 function rDate(start, end){
-  return new Date(+ start + Math.random() * (end - start))
+  return new Date(+ start + Math.random() * (end - start));
 };
 
 const arrBooks = [
@@ -38,7 +38,7 @@ Library.prototype.getAllBooks = () => {
 };
 
 Library.prototype.addBook = (title, author, pages, date) => {
-  const newBook = new Book(title, author, pages, date)
+  const newBook = new Book(title, author, pages, date);
   const bookExists = myLibrary.books.find(book => newBook.title === book.title);
   if(bookExists){
     console.log('Sorry, that book already exists');
@@ -57,7 +57,7 @@ Library.prototype.addBooks = (arr) => {
   let counter = 0;
   console.log(`I had these many books before adding the array ${counter}`);
   for(let i = 0; i < arr.length; i++){
-    let book = Object.values(arr[i])
+    let book = Object.values(arr[i]);
     myLibrary.addBook(...book);
     (myLibrary.addBook(...book) ? counter ++ : counter);
   }
@@ -80,7 +80,7 @@ Library.prototype.removeBookByTitle = title => {
 Library.prototype.removeBookByAuthor = author => {
   author = author.trim();
   const filteredArr = myLibrary.books.filter(book => book.author.toLowerCase() !== author.toLowerCase());
-  myLibrary.books = filterredArr
+  myLibrary.books = filterredArr;
   console.log(myLibrary.books);
 };
 
@@ -91,9 +91,9 @@ Library.prototype.getRandomBook = () => {
 
 Library.prototype.getBookByTitle = title => {
   title = title.trim();
-  const titleIndex = myLibrary.books.findIndex(book => book.title === title);
+  const titleIndex = myLibrary.books.findIndex(book => book.title.toLowerCase() === title.toLowerCase());
   if(titleIndex > -1){
-    console.log(myLibrary.books[titleIndex])
+    console.log(myLibrary.books[titleIndex]);
   } else{
     console.log('Book doesn\'t exist');
   }
@@ -121,7 +121,7 @@ Library.prototype.getAuthors = () => {
 };
 
 Library.prototype.getRandomAuthorName = () => {
-  const randomIndex = Math.floor(Math.random() * myLibrary.books.length)
+  const randomIndex = Math.floor(Math.random() * myLibrary.books.length);
   console.log(myLibrary.books[randomIndex].author);
 };
 
