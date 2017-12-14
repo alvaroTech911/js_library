@@ -151,9 +151,9 @@ var date1 = new Date(1425, 1, 1);
 var date2 = new Date(2018, 1, 1);
 function rDate(start, end) {
   return new Date(+start + Math.random() * (end - start));
-}
+};
 
-var arrBooks = [new _book2.default('The old man and the sea', 'Ernest Hemingway', 340, rDate(date1, date2)), new _book2.default('Dick Sand a captain at fifteen', 'Jules Verne'), new _book2.default('The Shining', 'Stephen King', 440), new _book2.default('The white road', 'John Connolly', 340, rDate(date1, date2)), new _book2.default('It', 'Stephen King', 340, rDate(date1, date2))];
+var arrBooks = [new _book2.default('The old man and the sea', 'Ernest Hemingway', 340, rDate(date1, date2)), new _book2.default('Dick Sand a captain at fifteen', 'Jules Verne'), new _book2.default('Dick Sand a captain at fifteen', 'Jules Verne'), new _book2.default('The Shining', 'Stephen King', 440), new _book2.default('The white road', 'John Connolly', 340, rDate(date1, date2)), new _book2.default('It', 'Stephen King', 340, rDate(date1, date2))];
 
 Library.prototype.getAllBooks = function () {
   console.log(myLibrary.books);
@@ -183,7 +183,7 @@ Library.prototype.addBooks = function (arr) {
   for (var i = 0; i < arr.length; i++) {
     var book = Object.values(arr[i]);
     myLibrary.addBook.apply(myLibrary, _toConsumableArray(book));
-    counter++;
+    myLibrary.addBook.apply(myLibrary, _toConsumableArray(book)) ? counter++ : counter;
   }
   console.log('Books successfully added ' + counter);
 };
@@ -208,7 +208,8 @@ Library.prototype.removeBookByAuthor = function (author) {
   var filteredArr = myLibrary.books.filter(function (book) {
     return book.author.toLowerCase() !== author.toLowerCase();
   });
-  console.log(filteredArr);
+  myLibrary.books = filterredArr;
+  console.log(myLibrary.books);
 };
 
 Library.prototype.getRandomBook = function () {
@@ -219,7 +220,7 @@ Library.prototype.getRandomBook = function () {
 Library.prototype.getBookByTitle = function (title) {
   title = title.trim();
   var titleIndex = myLibrary.books.findIndex(function (book) {
-    return book.title === title;
+    return book.title.toLowerCase() === title.toLowerCase();
   });
   if (titleIndex > -1) {
     console.log(myLibrary.books[titleIndex]);
@@ -241,14 +242,14 @@ Library.prototype.getBooksByAuthor = function (author) {
 };
 
 Library.prototype.getAuthors = function () {
-  var allBooks = {};
-  myLibrary.books.forEach(function (book) {
+  var allAuthors = {};
+  undefined.books.forEach(function (book) {
     Object.keys(book).forEach(function (key) {
       allAuthors[key] = allAuthors[key] || {};
       allAuthors[key][book[key]] = allAuthors[key][book[key]] + 1;
     });
   });
-  console.log(Object.keys(allBooks.author));
+  console.log(Object.keys(allAuthors.author));
 };
 
 Library.prototype.getRandomAuthorName = function () {

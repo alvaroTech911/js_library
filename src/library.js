@@ -34,7 +34,7 @@ const arrBooks = [
 ];
 
 Library.prototype.getAllBooks = () => {
-  console.log(myLibrary.books);
+  return myLibrary.books;
 };
 
 Library.prototype.addBook = (title, author, pages, date) => {
@@ -86,7 +86,7 @@ Library.prototype.removeBookByAuthor = author => {
 
 Library.prototype.getRandomBook = () => {
   const randomIndex = Math.floor(Math.random() * myLibrary.books.length);
-  console.log(myLibrary.books[randomIndex]);
+  return myLibrary.books[randomIndex];
 };
 
 Library.prototype.getBookByTitle = title => {
