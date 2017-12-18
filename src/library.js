@@ -1,8 +1,9 @@
 import Book from './book';
 
-let counter = 0; //variable used to count how many books have been added to my library successfuly
+import arrBooks from './arrBooks';
 
 let Library;
+let counter;
 
 (function(){
   let instance;
@@ -17,21 +18,6 @@ let Library;
 })();
 
 let myLibrary = new Library();
-
-const date1 = new Date(1425, 1, 1);
-const date2 = new Date(2018, 1, 1);
-function rDate(start, end){
-  return new Date(+ start + Math.random() * (end - start));
-};
-
-const arrBooks = [
-  new Book('The old man and the sea', 'Ernest Hemingway', 340, rDate(date1, date2)),
-  new Book('Dick Sand a captain at fifteen', 'Jules Verne'),
-  new Book('Dick Sand a captain at fifteen', 'Jules Verne'),
-  new Book('The Shining', 'Stephen King', 440),
-  new Book('The white road', 'John Connolly', 340, rDate(date1, date2)),
-  new Book('It', 'Stephen King', 340, rDate(date1, date2)),
-];
 
 Library.prototype.getAllBooks = () => {
   return myLibrary.books;
@@ -48,20 +34,16 @@ Library.prototype.addBook = (title, author, pages, date) => {
     return false;
   } else{
     myLibrary.books.push(newBook);
-    console.log(myLibrary.books);
     return true;
   }
 };
 
 Library.prototype.addBooks = (arr) => {
   let counter = 0;
-  console.log(`I had these many books before adding the array ${counter}`);
   for(let i = 0; i < arr.length; i++){
     let book = Object.values(arr[i]);
     myLibrary.addBook(...book);
-    (myLibrary.addBook(...book) ? counter ++ : counter);
   }
-  console.log(`Books successfully added ${counter}`);
 };
 
 myLibrary.addBooks(arrBooks);
@@ -80,8 +62,10 @@ Library.prototype.removeBookByTitle = title => {
 Library.prototype.removeBookByAuthor = author => {
   author = author.trim();
   const filteredArr = myLibrary.books.filter(book => book.author.toLowerCase() !== author.toLowerCase());
-  myLibrary.books = filterredArr;
+  const deletedBooksArr = myLibrary.books.filter(book => book.author.toLowerCase() === author.toLowerCase());
+  myLibrary.books = filteredArr;
   console.log(myLibrary.books);
+  return deletedBooksArr;
 };
 
 Library.prototype.getRandomBook = () => {
@@ -111,7 +95,7 @@ Library.prototype.getBooksByAuthor = author => {
 
 Library.prototype.getAuthors = () => {
   let allAuthors = {};
-  this.books.forEach(book => {
+  myLibrary.books.forEach(book => {
     Object.keys(book).forEach(key => {
       allAuthors[key] = allAuthors[key] || {};
       allAuthors[key][book[key]] = (allAuthors[key][book[key]]) + 1;
@@ -124,5 +108,19 @@ Library.prototype.getRandomAuthorName = () => {
   const randomIndex = Math.floor(Math.random() * myLibrary.books.length);
   console.log(myLibrary.books[randomIndex].author);
 };
+
+Library.prototype.search = (title, author, numOfPages, pubDate) => {
+  var searchArr = []
+  myLibrary.books.forEach((book, i) => {
+    if(
+      book.title.toLowerCase().indexOf(title) !== -1 &&
+      book.author.toLowerCase().indexOf(author) !== -1 &&
+      book.numberOfPages > numOfPages
+    ){
+      searchArr.push(myLibrary.books[i]);
+    }
+  })
+  return searchArr;
+}
 
 export default myLibrary;

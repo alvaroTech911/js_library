@@ -105,15 +105,11 @@ nav h1, .fa-bars{
   opacity: .8;
 }
 
-#add-book{
-  display: none;
-}
-
-#get-book-by-author{
-  display: none;
-}
-
-#get-book-by-title{
+#add-book,
+#get-book-by-author,
+#get-book-by-title,
+#remove-by-author,
+#search{
   display: none;
 }
 

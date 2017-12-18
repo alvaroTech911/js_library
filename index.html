@@ -21,9 +21,6 @@
       <div class="tabs tab-active" data-panel="get-all-books">
         <h3>Get All</h3>
       </div>
-      <div class="tabs">
-        <h3>Add Books</h3>
-      </div>
       <div class="tabs" data-panel="add-book">
         <h3>Add Book</h3>
       </div>
@@ -36,13 +33,13 @@
       <div class="tabs" data-panel="get-random-book">
         <h3>Get Random Book</h3>
       </div>
-      <div class="tabs">
+      <div class="tabs" data-panel="remove-by-author">
         <h3>Remove by Author</h3>
       </div>
-      <div class="tabs">
+      <div class="tabs" data-panel="remove-by-title">
         <h3>Remove by Title</h3>
       </div>
-      <div class="tabs">
+      <div class="tabs" data-panel="search">
         <h3>Search</h3>
       </div>
     </div>
@@ -58,22 +55,26 @@
       <div id="add-book" class="col-sm-12">
         <h2>Add Book</h2>
         <form>
-          <label for="title">Title<br>
-            <input type="text" name="title">
-          </label>
-          <label for="author">Author<br>
-            <input type="text" name="author">
-          </label>
-          <label for="num-of-pages">Pages<br>
-            <input type="text" name="numOfPages">
-          </label>
-          <label for="publish-date">Published<br>
-            <input type="text" name="publishDate">
-          </label>
-          <br>
+          <div class="form-container">
+            <div id="input-1" data-div=1>
+              <label for="title">Title<br>
+                <input type="text" name="title">
+              </label>
+              <label for="author">Author<br>
+                <input type="text" name="author">
+              </label>
+              <label for="num-of-pages">Pages<br>
+                <input type="text" name="numOfPages">
+              </label>
+              <label for="publish-date">Published<br>
+                <input type="date" name="publishDate">
+              </label>
+            </div>
+          </div>
           <button>Add Book</button>
         </form>
-
+        <h3>Add more forms</h3>
+        <button class="addMoreBookForms">+</button>
         <!-- Create a message saying a book was added successfully or not -->
       </div>
 
@@ -98,6 +99,36 @@
       </div>
 
       <div id="get-random-book" class="col-sm-12"></div>
+
+      <div id="remove-by-author" class="col-sm-12">
+        <h2>Remove books by author</h2>
+        <form>
+          <label for="author">Author
+            <input type="text" name="author">
+          </label>
+          <button>Search</button>
+        </form>
+        <div class="books-deleted">
+
+        </div>
+      </div>
+
+      <div id="search" class="col-sm-12">
+        <h2>Search</h2>
+        <form>
+          <label for="title">Title<br>
+            <input type="text" name="title">
+          </label>
+          <label for="author">Author<br>
+            <input type="text" name="author">
+          </label>
+          <label for="pages">Pages<br>
+            <input type="number" name="pages">
+          </label>
+          <button><i class="fa fa-search"></i></button>
+        </form>
+        <div class="books-found"></div>
+      </div>
     </div>
 
     <footer>
