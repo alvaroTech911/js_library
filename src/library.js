@@ -33,13 +33,15 @@ Library.prototype.addBook = function(title, author, pages, date) {
     console.log('You need to provide an author and a book title')
     return false;
   } else{
+    counter++
+    console.log(counter)
     this.books.push(newBook);
     return true;
   }
 };
 
 Library.prototype.addBooks = function(arr) {
-  let counter = 0;
+  counter = 0;
   for(let i = 0; i < arr.length; i++){
     let book = Object.values(arr[i]);
     this.addBook(...book);
@@ -50,12 +52,14 @@ myLibrary.addBooks(arrBooks);
 
 Library.prototype.removeBookByTitle = function(title) {
   title = title.trim();
-  const titleIndex = this.books.findIndex(book => book.title === title);
+  const titleIndex = this.books.findIndex(book => book.title.toLowerCase() === title.toLowerCase());
   if(titleIndex > -1){
     this.books.splice(titleIndex, 1);
     console.log(this.books);
+    return true;
   } else {
     console.log('Book doesn\'t exist');
+    return false;
   }
 };
 
@@ -115,7 +119,7 @@ Library.prototype.search = function(title, author, numOfPages, pubDate) {
     if(
       book.title.toLowerCase().indexOf(title) !== -1 &&
       book.author.toLowerCase().indexOf(author) !== -1 &&
-      book.numberOfPages > numOfPages
+      book.numberOfPages < numOfPages
     ){
       searchArr.push(this.books[i]);
     }

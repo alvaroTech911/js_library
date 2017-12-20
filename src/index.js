@@ -1,4 +1,5 @@
 import $ from './jquery-3.2.1.min';
+
 import Library from './library';
 
 Library.prototype.init = function(){
@@ -15,6 +16,7 @@ Library.prototype.init = function(){
   this.$booksFound = $('.books-found');
   this.$removeFromAuthorForm = $('#remove-by-author form');
   this.$booksDeleted = $('.books-deleted');
+  this.$removeFromTitleForm = $('#remove-by-title form');
 
   this.eventBinder();
 };
@@ -28,6 +30,7 @@ Library.prototype.eventBinder = function(){
   this.$addMoreBookForms.on('click', $.proxy(this.renderAddForm, this));
   this.$searchBtn.on('submit', $.proxy(this.renderSearchedBooks, this));
   this.$removeFromAuthorForm.on('submit', $.proxy(this.removeByAuthor, this))
+  this.$removeFromTitleForm.on('submit', $.proxy(this.removeByTitle, this))
 };
 
 Library.prototype.slideToggleNav = function(){
@@ -39,7 +42,7 @@ Library.prototype.renderAllBooks = function(){
   this.$getAllBooks.empty();
   for(var i = 0; i < bookArr.length; i++){
     this.$getAllBooks.append(
-      '<div class="book-card">'+
+      '<div class="book-card" data-id="' + bookArr[i].id + '">'+
         '<h2>' + bookArr[i].title + '</h2>'+
         '<h3>' + bookArr[i].author + '</h3>'+
         '<h4> Pages:' + bookArr[i].numberOfPages + '</h4>'+
@@ -74,8 +77,6 @@ Library.prototype.displayPanelSelected = function(sTab){
       return this.addBookForm();
     case 'search':
       return this.renderSearchedBooks();
-    case 'remove-by-author':
-      return this.removeByAuthor();
     default:
       return null;
   }
@@ -84,7 +85,7 @@ Library.prototype.displayPanelSelected = function(sTab){
 Library.prototype.renderRandomBook = function(){
   var randomBook = this.getRandomBook();
   this.$getRandomBook.empty().append(
-    '<div class="book-card">'+
+    '<div class="book-card" data-id="' + randomBook.id + '">'+
       '<h2>' + randomBook.title + '</h2>'+
       '<h3>' + randomBook.author + '</h3>'+
       '<h4> Pages:' + randomBook.numberOfPages + '</h4>'+
@@ -181,16 +182,40 @@ Library.prototype.removeByAuthor = function(e){
         '<h3>No books from this author were found</h3>'
       )
   } else{
-    this.$booksDeleted.empty()
-    var $booksDeleted = this.$booksDeleted;
+    this.$booksDeleted.empty();
+    var _booksDeleted = this.$booksDeleted;
     $.each(booksDeleted, function(i, book){
-      $booksDeleted.append(
+      _booksDeleted.append(
         '<h2>Books removed:</h2>'+
         '<h3>' + book.title + '</h3>'
       );
     });
   }
   $(elem).trigger('reset');
+}
+
+Library.prototype.removeByTitle = function(e){
+  e.preventDefault();
+  var elem = e.target;
+  var $input = $('#remove-by-title :input');
+  var vals = {};
+  $input.each(function(){
+    vals[this.name] = $(this).val();
+  });
+  console.log(vals);
+  var booksDeleted = this.removeBookByTitle(vals.title);
+  console.log(booksDeleted)
+  if(booksDeleted === false){
+    this.$booksDeleted.empty()
+      .append(
+        '<h3>No books match this title</h3>'
+      );
+  } else{
+    this.$booksDeleted.empty()
+      .append(
+        '<h3>Book deleted successfully</h3>'
+      );
+  }
 }
 
 $(function(){
