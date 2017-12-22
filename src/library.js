@@ -1,12 +1,13 @@
 import Book from './book';
 
-let counter = 0; //variable used to count how many books have been added to my library successfuly
+import arrBooks from './arrBooks';
 
 let Library;
+let counter;
 
 (function(){
   let instance;
-  Library = function(books){
+  Library = function(){
     if(instance){
       console.log('Library already exists');
       return instance
@@ -14,89 +15,77 @@ let Library;
     instance = this;
     this.books = [];
   }
-})()
+})();
 
-const myLibrary = new Library();
+let myLibrary = new Library();
 
-const date1 = new Date(1425, 1, 1);
-const date2 = new Date(2018, 1, 1);
-function rDate(start, end){
-  return new Date(+ start + Math.random() * (end - start))
-}
-
-const arrBooks = [
-  new Book('The old man and the sea', 'Ernest Hemingway', 340, rDate(date1, date2)),
-  new Book('Dick Sand a captain at fifteen', 'Jules Verne'),
-  new Book('The Shining', 'Stephen King', 440),
-  new Book('The white road', 'John Connolly', 340, rDate(date1, date2)),
-  new Book('It', 'Stephen King', 340, rDate(date1, date2)),
-];
-
-Library.prototype.getAllBooks = () => {
-  console.log(myLibrary.books);
+Library.prototype.getAllBooks = function() {
+  return this.books;
 };
 
-Library.prototype.addBook = (newBook) => {
-  const bookExists = myLibrary.books.find(book => newBook.title === book.title);
-  if(bookExists){
-    // debugger;
-    console.log('Sorry, that book already exists');
-    return false;
-  }else if(newBook.title === undefined || newBook.author === undefined){
-    console.log('You need to provide an author and a book title')
+Library.prototype.addBook = function(title, author, pages, date) {
+  const newBook = new Book(title, author, pages, date);
+  const bookExists = this.books.find(book => newBook.title === book.title);
+  if(bookExists !== undefined){
     return false;
   } else{
-    myLibrary.books.push(newBook);
-    console.log(myLibrary.books);
+    counter++
+    this.books.push(newBook);
     return true;
   }
 };
 
-Library.prototype.addBooks = (arr) => {
+Library.prototype.addBooks = function(arr) {
+  counter = 0;
   for(let i = 0; i < arr.length; i++){
-    myLibrary.addBook(arr[i]);
+    let book = Object.values(arr[i]);
+    this.addBook(...book);
   }
-  counter = counter + myLibrary.books.length;
-  console.log(`Books successfully added ${myLibrary.books.length}`);
+  return counter;
 };
 
-console.log(myLibrary.addBooks(arrBooks))
+myLibrary.addBooks(arrBooks);
 
-Library.prototype.removeBookByTitle = title => {
+Library.prototype.removeBookByTitle = function(title) {
   title = title.trim();
-  const titleIndex = myLibrary.books.findIndex(book => book.title === title);
+  const titleIndex = this.books.findIndex(book => book.title.toLowerCase() === title.toLowerCase());
   if(titleIndex > -1){
-    myLibrary.books.splice(titleIndex, 1);
-    console.log(myLibrary.books);
+    this.books.splice(titleIndex, 1);
+    console.log(this.books);
+    return true;
   } else {
     console.log('Book doesn\'t exist');
+    return false;
   }
 };
 
-Library.prototype.removeBookByAuthor = author => {
+Library.prototype.removeBookByAuthor = function(author) {
   author = author.trim();
-  const filteredArr = myLibrary.books.filter(book => book.author.toLowerCase() !== author.toLowerCase())
-  console.log(filteredArr);
+  const filteredArr = this.books.filter(book => book.author.toLowerCase() !== author.toLowerCase());
+  const deletedBooksArr = this.books.filter(book => book.author.toLowerCase() === author.toLowerCase());
+  this.books = filteredArr;
+  console.log(myLibrary.books);
+  return deletedBooksArr;
 };
 
-Library.prototype.getRandomBook = () => {
-  const randomIndex = Math.floor(Math.random() * myLibrary.books.length);
-  console.log(myLibrary.books[randomIndex]);
+Library.prototype.getRandomBook = function() {
+  const randomIndex = Math.floor(Math.random() * this.books.length);
+  return this.books[randomIndex];
 };
 
-Library.prototype.getBookByTitle = title => {
+Library.prototype.getBookByTitle = function(title) {
   title = title.trim();
-  const titleIndex = myLibrary.books.findIndex(book => book.title === title);
+  const titleIndex = this.books.findIndex(book => book.title.toLowerCase() === title.toLowerCase());
   if(titleIndex > -1){
-    console.log(myLibrary.books[titleIndex])
+    console.log(this.books[titleIndex]);
   } else{
     console.log('Book doesn\'t exist');
   }
 };
 
-Library.prototype.getBooksByAuthor = author => {
+Library.prototype.getBooksByAuthor = function(author) {
   author = author.trim();
-  const matchedBooks = myLibrary.books.filter(book => book.author === author);
+  const matchedBooks = this.books.filter(book => book.author === author);
   if(matchedBooks.length === 0){
     console.log('Author doesn\'t exist');
   } else{
@@ -104,20 +93,34 @@ Library.prototype.getBooksByAuthor = author => {
   }
 };
 
-Library.prototype.getAuthors = () => {
-  let allBooks = {};
-  myLibrary.books.forEach(book => {
+Library.prototype.getAuthors = function() {
+  let allAuthors = {};
+  this.books.forEach(book => {
     Object.keys(book).forEach(key => {
       allAuthors[key] = allAuthors[key] || {};
       allAuthors[key][book[key]] = (allAuthors[key][book[key]]) + 1;
     })
   })
-  console.log(Object.keys(allBooks.author));
+  return Object.keys(allAuthors.author);
 };
 
-Library.prototype.getRandomAuthorName = () => {
-  const randomIndex = Math.floor(Math.random() * myLibrary.books.length)
-  console.log(myLibrary.books[randomIndex].author);
+Library.prototype.getRandomAuthorName = function() {
+  const randomIndex = Math.floor(Math.random() * this.books.length);
+  console.log(this.books[randomIndex].author);
 };
 
-export default myLibrary
+Library.prototype.search = function(title, author, numOfPages, pubDate) {
+  var searchArr = []
+  this.books.forEach((book, i) => {
+    if(
+      book.title.toLowerCase().indexOf(title) !== -1 &&
+      book.author.toLowerCase().indexOf(author) !== -1 &&
+      book.numberOfPages < numOfPages
+    ){
+      searchArr.push(this.books[i]);
+    }
+  })
+  return searchArr;
+}
+
+export default Library;

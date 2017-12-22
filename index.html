@@ -2,14 +2,127 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
     <title></title>
   </head>
-  <body>
+  <body class="my-library">
+    <nav>
+      <div class="container">
+        <h1>My Library</h1>
+        <i class="fa fa-bars fa-3x"></i>
+      </div>
+    </nav>
 
-    <h1>My library!</h1>
+    <!-- Link panel to show different "pages" (mobil version only)-->
+    <div class="col-md-12 tab-panel no-padding">
+      <div class="tabs tab-active" data-panel="get-all-books">
+        <h3>Get All</h3>
+      </div>
+      <div class="tabs" data-panel="add-book">
+        <h3>Add Book</h3>
+      </div>
+      <div class="tabs" data-panel="get-random-book">
+        <h3>Get Random Book</h3>
+      </div>
+      <div class="tabs" data-panel="remove-by-author">
+        <h3>Remove by Author</h3>
+      </div>
+      <div class="tabs" data-panel="remove-by-title">
+        <h3>Remove by Title</h3>
+      </div>
+      <div class="tabs" data-panel="search">
+        <h3>Search</h3>
+      </div>
+    </div>
 
-    <h3>Open the console to use all of it's functions</h3>
+    <!-- Contenb body -->
+    <div class="container content-container">
+      <!-- All books in Library class will display here -->
+      <div id="get-all-books" class="col-sm-12">
 
+      </div>
+
+      <!-- Add just one book -->
+      <div id="add-book" class="col-sm-12">
+        <h2>Add Book</h2>
+        <form>
+          <div class="form-container">
+            <div id="input-1" data-div=1>
+              <label for="title">Title<br>
+                <input type="text" name="title">
+              </label>
+              <label for="author">Author<br>
+                <input type="text" name="author">
+              </label>
+              <label for="num-of-pages">Pages<br>
+                <input type="text" name="numOfPages">
+              </label>
+              <label for="publish-date">Published<br>
+                <input type="date" name="publishDate">
+              </label>
+            </div>
+          </div>
+          <button>Add Book</button>
+        </form>
+        <h3>Add more forms</h3>
+        <button class="addMoreBookForms">+</button>
+        <div class="book-added-counter"></div>
+      </div>
+
+
+      <div id="get-random-book" class="col-sm-12"></div>
+
+      <div id="remove-by-author" class="col-sm-12">
+        <h2>Remove books by author</h2>
+        <form>
+          <label for="author">Author
+            <input type="text" name="author">
+          </label>
+          <button>Search</button>
+        </form>
+        <div class="books-deleted">
+
+        </div>
+      </div>
+
+      <div id="remove-by-title" class="col-sm-12">
+        <h2>Remove books by title</h2>
+        <form>
+          <label for="title">Title
+            <input type="text" name="title">
+          </label>
+          <button>Search</button>
+        </form>
+        <div class="books-deleted">
+
+        </div>
+      </div>
+
+      <div id="search" class="col-sm-12">
+        <h2>Search</h2>
+        <form>
+          <label for="title">Title<br>
+            <input type="text" name="title">
+          </label>
+          <label for="author">Author<br>
+            <input type="text" name="author">
+          </label>
+          <label for="pages">Pages<br>
+            <input type="number" name="pages">
+          </label>
+          <button><i class="fa fa-search"></i></button>
+        </form>
+        <div class="books-found"></div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Take a look at my project on <a href="#"> <i class="fa fa-github fa-2x"></i> Github</a>.</p>
+    </footer>
+    <script src="https://use.fontawesome.com/4fde5d74b4.js"></script>
     <script src="dist/bundle.js"></script>
   </body>
 </html>

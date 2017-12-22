@@ -1,3 +1,5 @@
+import faker from 'faker';
+
 export default class Book{
   constructor(
     title,
@@ -8,6 +10,7 @@ export default class Book{
     this.title = title;
     this.author = author;
     this.numberOfPages = numberOfPages;
-    this.publishDate = publishDate;
+    this.publishDate = new Date(publishDate).toDateString();
+    this.id = faker.random.uuid();
   }
 }

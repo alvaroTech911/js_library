@@ -1,0 +1,124 @@
+body{
+  background-color: #f7f7f7;
+}
+
+h1, h2, h3, h4{
+  font-family: 'Fjalla One', sans-serif;
+  margin: 0;
+}
+
+img{
+  width: 100%;
+}
+
+nav{
+  width: 100%;
+  height: auto;
+  padding: 10px 0;
+  background-color: #2e4057;
+}
+
+main{
+  width: 90%;
+  margin: 0 auto;
+}
+
+.fa-bars{
+  float: right;
+}
+
+nav h1{
+  float: left;
+  margin: 0;
+}
+
+.no-padding{
+  padding: 0;
+}
+
+.my-library label, .my-library input{
+  width: 100%;
+}
+
+.my-library label{
+  margin: 10px 0;
+}
+
+.my-library input{
+  border: 1px solid #c8c8c8
+}
+
+.my-library button{
+  width: 30%;
+  margin: 35px 35%;
+  background-color: #f18f01;
+  color: #f7f7f7;
+}
+
+.my-library button:hover{
+  background-color: #18b2e3;
+}
+
+nav h1, .fa-bars{
+  color: #f18f01;
+}
+
+.content-container{
+  padding: 35px 10px;
+  height: auto;
+  min-height: 525px;
+}
+
+.tabs{
+  background-color: #48668a;
+  border-bottom: 1px solid #ebebeb;
+  text-align: center;
+  padding: 10px 0;
+  color: #ebebeb;
+}
+
+.tab-panel{
+  display: none;
+}
+
+.tab-active{
+  background-color: #1D84B5;
+}
+
+.book-card{
+  width: 100%;
+  min-height: 210px;
+  max-height: 350px;
+  margin: 0 0 25px;
+  position: relative;
+  border: 1px solid #c2c2c2;
+  overflow: hidden;
+  padding: 15px;
+  background-color: #ffffff;
+}
+
+.book-icon-holder{
+  width: 40%;
+  position: absolute;
+  bottom: -42px;
+  right: -20px;
+  opacity: .8;
+}
+
+#add-book,
+#get-book-by-author,
+#get-book-by-title,
+#remove-by-author,
+#remove-by-title,
+#search{
+  display: none;
+}
+
+footer{
+  width: 100%;
+  height: auto;
+  text-align: center;
+  padding: 25px 0;
+  background-color: #2a2a2a;
+  color: #f7f7f7;
+}
