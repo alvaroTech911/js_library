@@ -26,15 +26,10 @@ Library.prototype.getAllBooks = function() {
 Library.prototype.addBook = function(title, author, pages, date) {
   const newBook = new Book(title, author, pages, date);
   const bookExists = this.books.find(book => newBook.title === book.title);
-  if(bookExists){
-    console.log('Sorry, that book already exists');
-    return false;
-  }else if(newBook.title === undefined || newBook.author === undefined){
-    console.log('You need to provide an author and a book title')
+  if(bookExists !== undefined){
     return false;
   } else{
     counter++
-    console.log(counter)
     this.books.push(newBook);
     return true;
   }
@@ -46,6 +41,7 @@ Library.prototype.addBooks = function(arr) {
     let book = Object.values(arr[i]);
     this.addBook(...book);
   }
+  return counter;
 };
 
 myLibrary.addBooks(arrBooks);

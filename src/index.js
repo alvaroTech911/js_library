@@ -2,6 +2,8 @@ import $ from './jquery-3.2.1.min';
 
 import Library from './library';
 
+window.Library = Library;
+
 Library.prototype.init = function(){
   this.$faBars = $('.fa-bars');
   this.$tabs = $('.tabs');
@@ -9,6 +11,7 @@ Library.prototype.init = function(){
   this.$contentContainer = $('.content-container');
   this.$getAllBooks = $('#get-all-books');
   this.$getRandomBook = $('#get-random-book');
+  this.$addBook = $('#add-book');
   this.$addBookForm = $('#add-book form');
   this.$addMoreBookForms =$('.addMoreBookForms');
   this.$addBookFormContainer = $('#add-book .form-container');
@@ -17,6 +20,7 @@ Library.prototype.init = function(){
   this.$removeFromAuthorForm = $('#remove-by-author form');
   this.$booksDeleted = $('.books-deleted');
   this.$removeFromTitleForm = $('#remove-by-title form');
+  this.$bookAddedCounter = $('.book-added-counter')
 
   this.eventBinder();
 };
@@ -40,6 +44,9 @@ Library.prototype.slideToggleNav = function(){
 Library.prototype.renderAllBooks = function(){
   var bookArr = this.getAllBooks();
   this.$getAllBooks.empty();
+  this.$getAllBooks.html(
+    '<h3>Books in library: ' + aLibrary.books.length +'</h3>'
+  )
   for(var i = 0; i < bookArr.length; i++){
     this.$getAllBooks.append(
       '<div class="book-card" data-id="' + bookArr[i].id + '">'+
@@ -98,7 +105,7 @@ Library.prototype.renderRandomBook = function(){
 }
 
 Library.prototype.renderAddForm = function(){
-  var formsCounter = $('form div').last().data('div') + 1;
+  var formsCounter = $('.form-container div').last().data('div') + 1;
   this.$addBookFormContainer.append(
     '<div id="input-' + formsCounter +'" data-div=' + formsCounter + '>'+
       '<label for="title">Title<br>'+
@@ -121,9 +128,10 @@ Library.prototype.renderAddForm = function(){
 Library.prototype.addBookForm = function(){
   var arrBooks = [];
   var randomNumOfPages = Math.floor(Math.random() * 600) + 250;
-  var $formContainerDiv = $('.form-container div');
+  var $formContainer = $('.form-container');
   var $form = $('form');
-  $formContainerDiv.each(function(i, value){
+  var $bookAddedCounter = this.$bookAddedCounter;
+  $formContainer.children().each(function(i, value){
     $form.on('submit', function(e){
       e.preventDefault();
       var $inputs = $('#input-' + (i + 1) + ' :input');
@@ -134,10 +142,16 @@ Library.prototype.addBookForm = function(){
       if(!values.numOfPages){
         values.numOfPages = randomNumOfPages
       } else if(!value.publishDate){
-        values.publishDate = new Date()
+        values.publishDate = new Date();
       }
       arrBooks.push(values);
-      aLibrary.addBooks(arrBooks);
+      var counter = aLibrary.addBooks(arrBooks);
+      if(i === $formContainer.children().length -1){
+        $(this).trigger('reset');
+        $bookAddedCounter.html(
+          '<h3>Now the library has ' + aLibrary.books.length +' books</h3>'
+        );
+      }
     })
   })
 }
@@ -219,7 +233,6 @@ Library.prototype.removeByTitle = function(e){
 }
 
 $(function(){
-
   window.aLibrary = new Library();
   window.aLibrary.init();
 });

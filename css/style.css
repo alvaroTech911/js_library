@@ -109,6 +109,7 @@ nav h1, .fa-bars{
 #get-book-by-author,
 #get-book-by-title,
 #remove-by-author,
+#remove-by-title,
 #search{
   display: none;
 }
